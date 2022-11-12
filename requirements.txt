@@ -1,0 +1,6 @@
+Flask
+celery[redis]
+pytube 
+banana-dev
+python-dotenv
+flower==1.0.0

@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  flask_application: 
+    container_name: flask_application
+    build: .
+    command: flask run --host=0.0.0.0
+    environment:
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+
+  celery_worker:
+    container_name: celery_worker
+    build: .
+    command: celery -A tasks worker --loglevel=info
+    depends_on:
+      - flask_application
+      - redis
+
+  flower:
+    container_name: flower
+    build: .
+    command: celery -A tasks.app flower --port=5555
+    ports:
+      - 5556:5555
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - flask_application
+      - redis
+      - celery_worker
