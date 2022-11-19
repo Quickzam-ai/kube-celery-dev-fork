@@ -8,6 +8,6 @@ metadata:
 spec: 
   containers: 
   - name: celery-worker-app
-    image: kube-celery-dev-fork_celery_worker:latest
-    imagePullPolicy: IfNotPresent
+    image: raravindds/kube-celery-dev-fork-celery_worker
+
 

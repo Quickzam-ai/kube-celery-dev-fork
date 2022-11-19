@@ -8,6 +8,6 @@ metadata:
 spec: 
   containers: 
   - name: celery-flower-app
-    image: kube-celery-dev-fork_flower
+    image: raravindds/kube-celery-dev-fork-flower
     ports: 
       - containerPort: 5555
