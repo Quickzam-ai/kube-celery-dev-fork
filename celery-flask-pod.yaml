@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: celery-flask-pod
+  labels: 
+    name: celery-flask-pod
+    app: celery-worker-app
+spec: 
+  containers: 
+  - name: celery-flask-app
+    image: kube-celery-dev-fork_flask_application
+    ports: 
+      - containerPort: 5000
