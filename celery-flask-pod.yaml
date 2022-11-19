@@ -8,6 +8,8 @@ metadata:
 spec: 
   containers: 
   - name: celery-flask-app
-    image: kube-celery-dev-fork_flask_application
+    image: kube-celery-dev-fork_flask_application:latest
     ports: 
       - containerPort: 5000
+    imagePullPolicy: Never
+
