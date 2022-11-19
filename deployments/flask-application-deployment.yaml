@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o deployments/
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: flask-application
+  name: flask-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: flask-application
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o deployments/
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: flask-application
+    spec:
+      containers:
+        - args:
+            - flask
+            - run
+            - --host=0.0.0.0
+          env:
+            - name: MONGODB_HOST
+              value: mongodb
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_URL
+              value: redis
+          image: flask-application
+          name: flask-application
+          ports:
+            - containerPort: 5000
+          resources: {}
+      restartPolicy: Always
+status: {}
