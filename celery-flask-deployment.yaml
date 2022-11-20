@@ -16,7 +16,7 @@ spec:
     spec: 
       containers: 
         - name: celery-flask-container
-          image: kube-celery-dev-fork-flask_application
+          image: raravindds/kube-celery-dev-fork-flask_application
           imagePullPolicy: IfNotPresent
           ports: 
           - containerPort: 5000
