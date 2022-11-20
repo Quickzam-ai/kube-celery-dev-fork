@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata: 
-  name: celery_worker
+  name: celery-worker
   labels: 
     name: celery_worker
     app: celery-worker-app

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata: 
-  name: flask-application
+  name: flask-application-pod
   labels: 
     name: celery-flask-pod
     app: celery-worker-app
@@ -9,8 +9,17 @@ spec:
   containers: 
   - name: celery-flask-app
     image: raravindds/kube-celery-dev-fork-flask_application
+    imagePullPolicy: IfNotPresent
     ports: 
       - containerPort: 5000
-    
-    
+    env: 
+    - name: "REDIS_URL"
+      value: "redis"
+    - name: "REDIS_PORT"
+      value: "6379"
+    - name: "MONGODB_HOST"
+      value: "mangodb"
+    - name: "MONGODB_PORT"
+      value: "27017"
+# raravindds/kube-celery-dev-fork-flask_application
 

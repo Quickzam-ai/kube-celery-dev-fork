@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: redis-deployment
+spec: 
+  replicas: 2 
+  selector: 
+    matchLabels: 
+      name: celery-redis-pod
+  template: 
+    metadata: 
+      name: redis
+      labels: 
+        name: celery-redis-pod
+    spec: 
+      containers: 
+      - name: celery-redis-app
+        image: redis:6.2-alpine
+        ports: 
+          - containerPort: 6379

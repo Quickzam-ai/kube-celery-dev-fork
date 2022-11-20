@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: flask-applicaiton
+  labels: 
+    name: flask-application-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      name: flask-application
+  template: 
+    metadata: 
+      labels: 
+        name: flask-application 
+    spec: 
+      containers: 
+        - name: celery-flask-container
+          image: kube-celery-dev-fork-flask_application
+          imagePullPolicy: IfNotPresent
+          ports: 
+          - containerPort: 5000
+          env: 
+          - name: 'REDIS_URL'
+            value: 'redis'
+          - name: 'REDIS_PORT'
+            value: '6379'
+          - name: 'MONGODB_HOST'
+            value: 'mangodb'
+          - name: 'MONGODB_PORT'
+            value: '27017'
