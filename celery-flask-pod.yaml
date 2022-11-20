@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata: 
-  name: celery-flask-pod
+  name: flask-application
   labels: 
     name: celery-flask-pod
     app: celery-worker-app

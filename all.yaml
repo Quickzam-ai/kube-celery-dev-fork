@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: celery-pod
+  labels: 
+    name: celery-pod
+    app: celery-app
+spec: 
+  containers: 
+  - name: celery-flask
+    image: raravindds/kube-celery-dev-fork-flask_application
+    imagePullPolicy: IfNotPresent
+    ports:
+      - containerPort: 5000
+  - name: celery-worker
+    image: raravindds/kube-celery-dev-fork-celery_worker 
+    imagePullPolicy: IfNotPresent
+  - name: celery-flower
+    image: raravindds/kube-celery-dev-fork-flower
+    imagePullPolicy: IfNotPresent
+    ports:
+      - containerPort: 5556
+
+    
+

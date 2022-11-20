@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata: 
-  name: celery-worker-pod
+  name: celery-worker
   labels: 
     name: celery-worker-pod
     app: celery-worker-app
