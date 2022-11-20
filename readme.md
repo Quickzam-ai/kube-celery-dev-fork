@@ -23,3 +23,6 @@ sudo mv ./kompose /usr/local/bin/kompose
 ```python 
 kompose convert -o folder_name/
 ```
+
+
+# First deployment then service. 
