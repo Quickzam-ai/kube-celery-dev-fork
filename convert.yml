@@ -1,0 +1,80 @@
+name: kube-celery-dev-fork
+services:
+  celery_worker:
+    build:
+      context: /workspaces/kube-celery-dev-fork
+      dockerfile: Dockerfile
+    command:
+    - celery
+    - -A
+    - tasks
+    - worker
+    - --loglevel=info
+    container_name: celery_worker
+    depends_on:
+      flask_application:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      default: null
+  flask_application:
+    build:
+      context: /workspaces/kube-celery-dev-fork
+      dockerfile: Dockerfile
+    command:
+    - flask
+    - run
+    - --host=0.0.0.0
+    container_name: flask_application
+    depends_on:
+      redis:
+        condition: service_started
+    environment:
+      MONGODB_HOST: mongodb
+      MONGODB_PORT: "27017"
+      REDIS_PORT: "6379"
+      REDIS_URL: redis
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 5000
+      published: "5000"
+      protocol: tcp
+  flower:
+    build:
+      context: /workspaces/kube-celery-dev-fork
+      dockerfile: Dockerfile
+    command:
+    - celery
+    - -A
+    - tasks.app
+    - flower
+    - --port=5555
+    container_name: flower
+    depends_on:
+      celery_worker:
+        condition: service_started
+      flask_application:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 5555
+      published: "5556"
+      protocol: tcp
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    networks:
+      default: null
+networks:
+  default:
+    name: kube-celery-dev-fork_default

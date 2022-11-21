@@ -30,9 +30,9 @@ spec:
             - tasks
             - worker
             - --loglevel=info
-          image: kube-celery-dev-fork_celery_worker:latest
+          image: kube-celery-dev-fork-celery_worker
+          name: celery-worker 
           imagePullPolicy: IfNotPresent
-          name: celery-worker
           resources: {}
       restartPolicy: Always
 status: {}
